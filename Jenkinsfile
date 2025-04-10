@@ -34,12 +34,10 @@ pipeline {
 
             if (BRANCH_NAME == "dev") {
               sh """
-                docker tag node-image $DEV_IMAGE
                 docker push $DEV_IMAGE
               """
             } else if (BRANCH_NAME == "main") {
               sh """
-                docker tag node-image $PROD_IMAGE
                 docker push $PROD_IMAGE
               """
             } else {
