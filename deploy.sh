@@ -6,12 +6,12 @@ echo "Deploying to server..."
 BRANCH_NAME=$1
 
 # Set image and container name based on branch
-if [ "$BRANCH_NAME" == "dev" ] || [ "$BRANCH_NAME" == "dev" ]; then
-    IMAGE="prasanna1808/dev:latest"
-    CONTAINER_NAME="app-dev"
-else
+if [ "$BRANCH_NAME" == "main" ] || [ "$BRANCH_NAME" == "prod" ]; then
     IMAGE="prasanna1808/prod:latest"
     CONTAINER_NAME="app-prod"
+else
+    IMAGE="prasanna1808/dev:latest"
+    CONTAINER_NAME="app-dev"
 fi
 
 # Connect to EC2 and deploy
