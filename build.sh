@@ -6,10 +6,10 @@ BRANCH_NAME=$1
 echo "Building Docker image for branch: $BRANCH_NAME"
 
 # Define image name based on branch
-if [ "$BRANCH_NAME" == "dev" ] || [ "$BRANCH_NAME" == "dev" ]; then
-    IMAGE_NAME="prasanna1808/dev:latest"
-else
+if [ "$BRANCH_NAME" == "main" ] || [ "$BRANCH_NAME" == "prod" ]; then
     IMAGE_NAME="prasanna1808/prod:latest"
+else
+    IMAGE_NAME="prasanna1808/dev:latest"
 fi
 
 # Build and push image
