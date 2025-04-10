@@ -51,7 +51,6 @@ pipeline {
     stage('Deploy') {
     steps {
       sshagent (credentials: ['ec2-ssh']) {
-      sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.87.3.191 '
         script {
             sh 'chmod +x deploy.sh'
             sh './deploy.sh'
