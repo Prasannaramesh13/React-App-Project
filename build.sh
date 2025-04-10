@@ -14,4 +14,3 @@ fi
 
 # Build and push image
 docker build -t $IMAGE_NAME .
-docker push $IMAGE_NAME
