@@ -15,7 +15,7 @@ else
 fi
 
 # Connect to EC2 and deploy
-ssh -i AWS.pem ubuntu@<EC2_PUBLIC_IP> << EOF
+ssh -i AWS.pem ubuntu@54.87.3.191 << EOF
     docker pull $IMAGE
     docker stop $CONTAINER_NAME || true
     docker rm $CONTAINER_NAME || true
