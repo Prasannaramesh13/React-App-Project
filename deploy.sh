@@ -15,9 +15,8 @@ else
 fi
 
 # Connect to EC2 and deploy
-ssh-keyscan -H 54.87.3.191 >> ~/.ssh/known_hosts<< EOF
+
     docker pull $IMAGE
     docker stop $CONTAINER_NAME || true
     docker rm $CONTAINER_NAME || true
     docker run -d --name $CONTAINER_NAME -p 80:3000 $IMAGE
-EOF
