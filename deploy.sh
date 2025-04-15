@@ -15,7 +15,7 @@ else
 fi
 
 # Connect to EC2 and deploy
-ssh -o StrictHostKeyChecking=no ubuntu@98.81.142.133 << EOF
+ssh -o StrictHostKeyChecking=no ubuntu@54.224.240.7 << EOF
     docker pull $IMAGE
     docker stop $CONTAINER_NAME || true
     docker rm $CONTAINER_NAME || true
