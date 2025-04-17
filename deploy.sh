@@ -3,10 +3,11 @@
 echo "Deploying to server..."
 
 # Accept BRANCH_NAME as an argument
-BRANCH_NAME=$1
-
+BRANCH_NAME=$(basename "$1")
+echo "Raw input branch: $1"
+echo "Normalized branch: $BRANCH_NAME"
 # Set image and container name based on branch
-if [ "$BRANCH_NAME" == "main" ] || [ "$BRANCH_NAME" == "prod" ]; then
+if [ "$BRANCH_NAME" == "main" ]; then
     IMAGE="prasanna1808/prod:latest"
     CONTAINER_NAME="app-prod"
 else
