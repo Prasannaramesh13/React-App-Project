@@ -17,6 +17,3 @@ echo "Building image with tag: $IMAGE_NAME"
 
 # Build the image
 docker build -t $IMAGE_NAME .
-
-# Optionally, push the image
-docker push $IMAGE_NAME
