@@ -1,6 +1,6 @@
 pipeline {
   agent any
- 
+
   environment {
     DEV_IMAGE = 'prasanna1808/dev:latest'
     PROD_IMAGE = 'prasanna1808/prod:latest'
@@ -11,8 +11,8 @@ pipeline {
       steps {
         checkout scm
         script {
-          BRANCH_NAME = env.GIT_BRANCH.replaceAll('origin/', '')
-          echo "Current branch: ${BRANCH_NAME}"
+          env.BRANCH_NAME = env.GIT_BRANCH.replaceAll('origin/', '')
+          echo "Current branch: ${env.BRANCH_NAME}"
         }
       }
     }
@@ -21,7 +21,7 @@ pipeline {
       steps {
         script {
           sh 'chmod +x build.sh'
-          sh './build.sh'
+          sh "./build.sh ${env.BRANCH_NAME}"
         }
       }
     }
@@ -30,16 +30,14 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
           script {
-            sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+            sh """
+              echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+            """
 
-            if (BRANCH_NAME == "dev") {
-              sh """
-                docker push $DEV_IMAGE
-              """
-            } else if (BRANCH_NAME == "main") {
-              sh """
-                docker push $PROD_IMAGE
-              """
+            if (env.BRANCH_NAME == "dev") {
+              sh "docker push $DEV_IMAGE"
+            } else if (env.BRANCH_NAME == "main") {
+              sh "docker push $PROD_IMAGE"
             } else {
               echo "Not a dev or main branch. Skipping push."
             }
@@ -49,17 +47,15 @@ pipeline {
     }
 
     stage('Deploy') {
-    steps {
-      sshagent (credentials: ['ec2-ssh']) {
-        script {
-            sh 'chmod +x deploy.sh'
-            sh './deploy.sh'
+      steps {
+        sshagent (credentials: ['ec2-ssh']) {
+          sh 'chmod +x deploy.sh'
+          sh "./deploy.sh ${env.BRANCH_NAME}"
         }
       }
     }
   }
-}   
-  
+
   post {
     always {
       sh 'docker logout'
