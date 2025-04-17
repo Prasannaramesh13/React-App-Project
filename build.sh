@@ -1,16 +1,19 @@
 #!/bin/bash
 
 # Accept BRANCH_NAME as argument
-BRANCH_NAME=$1
+BRANCH_NAME=$(basename "$1")
 
-echo "Building Docker image for branch: $BRANCH_NAME"
+echo "Raw input branch: $1"
+echo "Normalized branch: $BRANCH_NAME"
 
 # Define image name based on branch
-if [ "$BRANCH_NAME" == "main" ] || [ "$BRANCH_NAME" == "prod" ]; then
+if [ "$BRANCH_NAME" == "main" ]; then
     IMAGE_NAME="prasanna1808/prod:latest"
 else
     IMAGE_NAME="prasanna1808/dev:latest"
 fi
 
-# Build and push image
+echo "Building image with tag: $IMAGE_NAME"
+
+# Build the image
 docker build -t $IMAGE_NAME .
