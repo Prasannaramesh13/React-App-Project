@@ -50,7 +50,7 @@ pipeline {
       steps {
         sshagent (credentials: ['ec2-ssh']) {
           sh 'chmod +x deploy.sh'
-          sh './deploy.sh'
+          sh "./deploy.sh ${env.BRANCH_NAME}"
         }
       }
     }
