@@ -21,7 +21,7 @@ pipeline {
       steps {
         script {
           sh 'chmod +x build.sh'
-          sh './build.sh'
+          sh "./build.sh ${env.BRANCH_NAME}"
         }
       }
     }
